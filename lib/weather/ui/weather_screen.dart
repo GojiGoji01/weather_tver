@@ -40,40 +40,55 @@ class _WeatherScreenState extends State<WeatherScreen> {
         color: Colors.blue[100],
         child: Stack(
           children: [
-            DropdownButton<String>(
-              value: _selectedCity,
-              items: cities.map((city) {
-                return DropdownMenuItem<String>(
-                  value: city,
-                  child: Text(city),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedCity = value!;
-                  _getWeather();
-                });
-              },
-            ),
-            Center(
-              child: Text(
-                _weather?.temp.toStringAsFixed(1) ?? '',
-                style: TextStyle(
-                  fontSize: 54,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
+            if (_weather != null)
+              Align(
+                alignment: const Alignment(0, -0.2),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _weather!.temp.toStringAsFixed(1),
+                      style: const TextStyle(
+                        fontSize: 54,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    const Text(
+                      '°C',
+                      style: TextStyle(fontSize: 32, color: Colors.black),
+                    ),
+                  ],
                 ),
               ),
-            ),
             Align(
-              alignment: Alignment(0, -0.8),
-              child: Text(
-                _weather?.city ?? '',
-                style: TextStyle(
-                  fontSize: 44,
+              alignment: const Alignment(0, -0.5),
+              child: DropdownButton<String>(
+                value: _selectedCity,
+                icon: const SizedBox.shrink(),
+                underline: const SizedBox.shrink(),
+                dropdownColor: Colors.blue[200]?.withOpacity(0.9),
+                focusColor: Colors.transparent,
+                elevation: 0,
+                style: const TextStyle(
+                  fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
+                items: cities.map((city) {
+                  return DropdownMenuItem<String>(
+                    value: city,
+                    child: Text(city),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedCity = value!;
+                    _getWeather();
+                  });
+                },
               ),
             ),
           ],

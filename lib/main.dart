@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bless_clicker/number_section.dart';
 import 'package:bless_clicker/weather/ui/weather_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'KONKRETIKA',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
