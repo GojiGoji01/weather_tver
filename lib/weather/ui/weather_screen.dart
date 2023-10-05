@@ -12,12 +12,17 @@ class WeatherScreen extends StatefulWidget {
 class _WeatherScreenState extends State<WeatherScreen> {
   Weather? _weather;
   String _selectedCity = 'London';
+  String _selectedUnit = '°C';
   final List<String> cities = ['London', 'Tver', 'Paris', 'Saint-P', 'Tokyo'];
-
+  final List<String> units = ['°C', '°F'];
   Future<void> _getWeather() async {
     final api = WeatherApi();
     try {
-      final weather = await api.getCurrentWeather(_selectedCity);
+      final weather = await api.getCurrentWeather(
+        _selectedCity,
+        _selectedUnit,
+      );
+
       setState(() {
         _weather = weather;
       });
@@ -29,7 +34,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
   @override
   void initState() {
     super.initState();
-
     _getWeather();
   }
 
@@ -48,7 +52,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      _weather!.temp.toStringAsFixed(1),
+                      _selectedUnit == '°C'
+                          ? '${_weather!.temp.toStringAsFixed(1)}°C'
+                          : '${_weather!.tempFahrenheit.toStringAsFixed(1)}°F',
                       style: const TextStyle(
                         fontSize: 54,
                         color: Colors.black,
@@ -56,9 +62,30 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    const Text(
-                      '°C',
-                      style: TextStyle(fontSize: 32, color: Colors.black),
+                    DropdownButton<String>(
+                      value: _selectedUnit,
+                      icon: const SizedBox.shrink(),
+                      underline: const SizedBox.shrink(),
+                      dropdownColor: Colors.blue[200]?.withOpacity(0.9),
+                      focusColor: Colors.transparent,
+                      elevation: 0,
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                      items: units.map((unit) {
+                        return DropdownMenuItem<String>(
+                          value: unit,
+                          child: Text(unit),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedUnit = value!;
+                          _getWeather();
+                        });
+                      },
                     ),
                   ],
                 ),
