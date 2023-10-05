@@ -46,7 +46,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.blue[100],
+        color: Color.fromARGB(255, 62, 68, 74),
         child: Stack(
           children: [
             if (_weather != null)
@@ -76,7 +76,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       value: _selectedUnit,
                       icon: const SizedBox.shrink(),
                       underline: const SizedBox.shrink(),
-                      dropdownColor: Colors.blue[200]?.withOpacity(0.9),
+                      dropdownColor: Colors.blue[200]?.withOpacity(0.3),
                       focusColor: Colors.transparent,
                       elevation: 0,
                       style: const TextStyle(
@@ -106,7 +106,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 value: _selectedCity,
                 icon: const SizedBox.shrink(),
                 underline: const SizedBox.shrink(),
-                dropdownColor: Colors.blue[200]?.withOpacity(0.9),
+                dropdownColor: Colors.blue[200]?.withOpacity(0.2),
                 focusColor: Colors.transparent,
                 elevation: 0,
                 style: const TextStyle(
