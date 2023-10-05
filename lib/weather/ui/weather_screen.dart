@@ -53,8 +53,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   children: [
                     Text(
                       _selectedUnit == '°C'
-                          ? '${_weather!.temp.toStringAsFixed(1)}°C'
-                          : '${_weather!.tempFahrenheit.toStringAsFixed(1)}°F',
+                          ? '${_weather!.temp.toStringAsFixed(1)}'
+                          : '${_weather!.tempFahrenheit.toStringAsFixed(1)}',
                       style: const TextStyle(
                         fontSize: 54,
                         color: Colors.black,
