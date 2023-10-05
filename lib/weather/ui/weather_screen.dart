@@ -51,6 +51,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Icon(
+                      Icons.sunny_snowing,
+                      size: 44,
+                      color: Colors.yellow,
+                    ),
                     Text(
                       _selectedUnit == '°C'
                           ? '${_weather!.temp.toStringAsFixed(1)}'
