@@ -2,6 +2,15 @@ import 'package:bless_clicker/weather/data/models/weather.dart';
 import 'package:bless_clicker/weather/data/weather_api.dart';
 import 'package:flutter/material.dart';
 
+enum DegreeUnit {
+  celsius('°C'),
+  fahrenheit('°F');
+
+  const DegreeUnit(this.sign);
+
+  final String sign;
+}
+
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({super.key});
 
@@ -12,16 +21,12 @@ class WeatherScreen extends StatefulWidget {
 class _WeatherScreenState extends State<WeatherScreen> {
   Weather? _weather;
   String _selectedCity = 'London';
-  String _selectedUnit = '°C';
+  DegreeUnit _selectedUnit = DegreeUnit.celsius;
   final List<String> cities = ['London', 'Tver', 'Paris', 'Saint-P', 'Tokyo'];
-  final List<String> units = ['°C', '°F'];
   Future<void> _getWeather() async {
     final api = WeatherApi();
     try {
-      final weather = await api.getCurrentWeather(
-        _selectedCity,
-        _selectedUnit,
-      );
+      final weather = await api.getCurrentWeather(_selectedCity);
 
       setState(() {
         _weather = weather;
@@ -51,15 +56,15 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.sunny_snowing,
                       size: 44,
                       color: Colors.yellow,
                     ),
                     Text(
-                      _selectedUnit == '°C'
-                          ? '${_weather!.temp.toStringAsFixed(1)}'
-                          : '${_weather!.tempFahrenheit.toStringAsFixed(1)}',
+                      _selectedUnit == DegreeUnit.celsius
+                          ? _weather!.temp.toStringAsFixed(1)
+                          : _weather!.tempFahrenheit.toStringAsFixed(1),
                       style: const TextStyle(
                         fontSize: 54,
                         color: Colors.black,
@@ -67,7 +72,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    DropdownButton<String>(
+                    DropdownButton<DegreeUnit>(
                       value: _selectedUnit,
                       icon: const SizedBox.shrink(),
                       underline: const SizedBox.shrink(),
@@ -79,10 +84,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
-                      items: units.map((unit) {
-                        return DropdownMenuItem<String>(
+                      items: DegreeUnit.values.map((unit) {
+                        return DropdownMenuItem<DegreeUnit>(
                           value: unit,
-                          child: Text(unit),
+                          child: Text(unit.sign),
                         );
                       }).toList(),
                       onChanged: (value) {
