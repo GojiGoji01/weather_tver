@@ -41,7 +41,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.blue[100],
+        color: Color.fromARGB(255, 62, 68, 74),
         child: Stack(
           children: [
             if (_weather != null)
@@ -66,7 +66,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 20),
                     DropdownButton<String>(
                       value: _selectedUnit,
                       icon: const SizedBox.shrink(),
