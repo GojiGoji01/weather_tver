@@ -5,6 +5,7 @@ class Weather {
   final String country;
   final double lat;
   final double lon;
+  final bool isDaytime;
 
   Weather({
     required this.temp,
@@ -13,6 +14,7 @@ class Weather {
     required this.country,
     required this.lat,
     required this.lon,
+    required this.isDaytime,
   });
 
   factory Weather.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class Weather {
       country: json['location']['country'] as String,
       lat: (json['location']['lat'] as num).toDouble(),
       lon: (json['location']['lon'] as num).toDouble(),
+      isDaytime: json['current']['is_day'] == 1,
     );
   }
 }

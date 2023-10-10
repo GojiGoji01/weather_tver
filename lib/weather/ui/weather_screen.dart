@@ -42,11 +42,23 @@ class _WeatherScreenState extends State<WeatherScreen> {
     _getWeather();
   }
 
+  bool isDaytime() {
+    final now = DateTime.now();
+    final currentTime = now.hour;
+    return currentTime >= 6 && currentTime < 18;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(255, 62, 68, 74),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+                isDaytime() ? 'assets/dayset.jpg' : 'assets/nightset.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Stack(
           children: [
             if (_weather != null)
