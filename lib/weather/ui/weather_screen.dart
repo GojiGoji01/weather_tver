@@ -69,7 +69,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Icon(
-                      Icons.sunny_snowing,
+                      Icons.sunny,
                       size: 44,
                       color: Colors.yellow,
                     ),
@@ -79,7 +79,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                           : _weather!.tempFahrenheit.toStringAsFixed(1),
                       style: const TextStyle(
                         fontSize: 54,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 82, 203, 21),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -89,12 +89,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       icon: const SizedBox.shrink(),
                       underline: const SizedBox.shrink(),
                       dropdownColor: Colors.blue[200]?.withOpacity(0.3),
-                      focusColor: Colors.transparent,
+                      focusColor: Color.fromARGB(0, 117, 193, 51),
                       elevation: 0,
                       style: const TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 143, 187, 41),
                       ),
                       items: DegreeUnit.values.map((unit) {
                         return DropdownMenuItem<DegreeUnit>(
@@ -119,12 +119,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 icon: const SizedBox.shrink(),
                 underline: const SizedBox.shrink(),
                 dropdownColor: Colors.blue[200]?.withOpacity(0.2),
-                focusColor: Colors.transparent,
+                focusColor: Color.fromARGB(0, 170, 198, 46),
                 elevation: 0,
                 style: const TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: Color.fromARGB(255, 124, 124, 32),
                 ),
                 items: cities.map((city) {
                   return DropdownMenuItem<String>(
