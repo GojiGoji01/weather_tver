@@ -2,6 +2,15 @@ import 'package:bless_clicker/weather/data/models/weather.dart';
 import 'package:bless_clicker/weather/data/weather_api.dart';
 import 'package:flutter/material.dart';
 
+enum DegreeUnit {
+  celsius('°C'),
+  fahrenheit('°F');
+
+  const DegreeUnit(this.sign);
+
+  final String sign;
+}
+
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen({super.key});
 
@@ -12,12 +21,13 @@ class WeatherScreen extends StatefulWidget {
 class _WeatherScreenState extends State<WeatherScreen> {
   Weather? _weather;
   String _selectedCity = 'London';
+  DegreeUnit _selectedUnit = DegreeUnit.celsius;
   final List<String> cities = ['London', 'Tver', 'Paris', 'Saint-P', 'Tokyo'];
-
   Future<void> _getWeather() async {
     final api = WeatherApi();
     try {
       final weather = await api.getCurrentWeather(_selectedCity);
+
       setState(() {
         _weather = weather;
       });
@@ -29,15 +39,26 @@ class _WeatherScreenState extends State<WeatherScreen> {
   @override
   void initState() {
     super.initState();
-
     _getWeather();
+  }
+
+  bool isDaytime() {
+    final now = DateTime.now();
+    final currentTime = now.hour;
+    return currentTime >= 6 && currentTime < 18;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.blue[100],
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+                isDaytime() ? 'assets/dayset.jpg' : 'assets/nightset.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Stack(
           children: [
             if (_weather != null)
@@ -47,18 +68,46 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const Icon(
+                      Icons.sunny,
+                      size: 44,
+                      color: Colors.yellow,
+                    ),
                     Text(
-                      _weather!.temp.toStringAsFixed(1),
+                      _selectedUnit == DegreeUnit.celsius
+                          ? _weather!.temp.toStringAsFixed(1)
+                          : _weather!.tempFahrenheit.toStringAsFixed(1),
                       style: const TextStyle(
                         fontSize: 54,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 82, 203, 21),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(width: 8),
-                    const Text(
-                      '°C',
-                      style: TextStyle(fontSize: 32, color: Colors.black),
+                    DropdownButton<DegreeUnit>(
+                      value: _selectedUnit,
+                      icon: const SizedBox.shrink(),
+                      underline: const SizedBox.shrink(),
+                      dropdownColor: Colors.blue[200]?.withOpacity(0.3),
+                      focusColor: Color.fromARGB(0, 117, 193, 51),
+                      elevation: 0,
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 143, 187, 41),
+                      ),
+                      items: DegreeUnit.values.map((unit) {
+                        return DropdownMenuItem<DegreeUnit>(
+                          value: unit,
+                          child: Text(unit.sign),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedUnit = value!;
+                          _getWeather();
+                        });
+                      },
                     ),
                   ],
                 ),
@@ -69,13 +118,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 value: _selectedCity,
                 icon: const SizedBox.shrink(),
                 underline: const SizedBox.shrink(),
-                dropdownColor: Colors.blue[200]?.withOpacity(0.9),
-                focusColor: Colors.transparent,
+                dropdownColor: Colors.blue[200]?.withOpacity(0.2),
+                focusColor: Color.fromARGB(0, 170, 198, 46),
                 elevation: 0,
                 style: const TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: Color.fromARGB(255, 124, 124, 32),
                 ),
                 items: cities.map((city) {
                   return DropdownMenuItem<String>(

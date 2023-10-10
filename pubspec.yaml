@@ -66,6 +66,8 @@ flutter:
     - assets/joka1.jpg
     - assets/joka2.jpg
     - assets/joka3.jpg
+    - assets/dayset.jpg
+    - assets/nightset.jpg
 
   
   # An image asset can refer to one or more resolution-specific "variants", see
