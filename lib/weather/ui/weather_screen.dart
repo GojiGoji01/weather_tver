@@ -22,7 +22,14 @@ class _WeatherScreenState extends State<WeatherScreen> {
   Weather? _weather;
   String _selectedCity = 'London';
   DegreeUnit _selectedUnit = DegreeUnit.celsius;
-  final List<String> cities = ['London', 'Tver', 'Paris', 'Saint-P', 'Tokyo'];
+  final List<String> cities = [
+    'London',
+    'Tver',
+    'Paris',
+    'Saint-P',
+    'Tokyo',
+    'USA',
+  ];
   Future<void> _getWeather() async {
     final api = WeatherApi();
     try {
@@ -43,9 +50,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   }
 
   bool isDaytime() {
-    final now = DateTime.now();
-    final currentTime = now.hour;
-    return currentTime >= 6 && currentTime < 18;
+    return _weather?.isDaytime ?? false;
   }
 
   @override
