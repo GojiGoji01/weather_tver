@@ -22,7 +22,14 @@ class _WeatherScreenState extends State<WeatherScreen> {
   Weather? _weather;
   String _selectedCity = 'London';
   DegreeUnit _selectedUnit = DegreeUnit.celsius;
-  final List<String> cities = ['London', 'Tver', 'Paris', 'Saint-P', 'Tokyo'];
+  final List<String> cities = [
+    'London',
+    'Tver',
+    'Paris',
+    'Saint-P',
+    'Tokyo',
+    'USA',
+  ];
   Future<void> _getWeather() async {
     final api = WeatherApi();
     try {
@@ -42,11 +49,19 @@ class _WeatherScreenState extends State<WeatherScreen> {
     _getWeather();
   }
 
+  bool get isDaytime => _weather?.isDaytime ?? false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(255, 62, 68, 74),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+                isDaytime ? 'assets/dayset.jpg' : 'assets/nightset.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Stack(
           children: [
             if (_weather != null)
@@ -57,7 +72,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Icon(
-                      Icons.sunny_snowing,
+                      Icons.sunny,
                       size: 44,
                       color: Colors.yellow,
                     ),
@@ -67,7 +82,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                           : _weather!.tempFahrenheit.toStringAsFixed(1),
                       style: const TextStyle(
                         fontSize: 54,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 82, 203, 21),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -77,12 +92,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       icon: const SizedBox.shrink(),
                       underline: const SizedBox.shrink(),
                       dropdownColor: Colors.blue[200]?.withOpacity(0.3),
-                      focusColor: Colors.transparent,
+                      focusColor: Color.fromARGB(0, 117, 193, 51),
                       elevation: 0,
                       style: const TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 143, 187, 41),
                       ),
                       items: DegreeUnit.values.map((unit) {
                         return DropdownMenuItem<DegreeUnit>(
@@ -107,12 +122,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 icon: const SizedBox.shrink(),
                 underline: const SizedBox.shrink(),
                 dropdownColor: Colors.blue[200]?.withOpacity(0.2),
-                focusColor: Colors.transparent,
+                focusColor: Color.fromARGB(0, 170, 198, 46),
                 elevation: 0,
                 style: const TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: Color.fromARGB(255, 124, 124, 32),
                 ),
                 items: cities.map((city) {
                   return DropdownMenuItem<String>(
