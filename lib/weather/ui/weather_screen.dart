@@ -49,9 +49,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     _getWeather();
   }
 
-  bool isDaytime() {
-    return _weather?.isDaytime ?? false;
-  }
+  bool get isDaytime => _weather?.isDaytime ?? false;
 
   @override
   Widget build(BuildContext context) {
