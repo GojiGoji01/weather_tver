@@ -58,7 +58,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-                isDaytime() ? 'assets/dayset.jpg' : 'assets/nightset.jpg'),
+                isDaytime ? 'assets/dayset.jpg' : 'assets/nightset.jpg'),
             fit: BoxFit.cover,
           ),
         ),
